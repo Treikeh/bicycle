@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://cstbvana7a8uq"]
+
+[ext_resource type="PackedScene" uid="uid://cf8hi83yjdmgq" path="res://entities/controller_input.tscn" id="1_77p72"]
+[ext_resource type="Script" uid="uid://b81k0rficrv3" path="res://entities/bike.gd" id="1_f5gm3"]
+[ext_resource type="PackedScene" uid="uid://bs84ugoevaswi" path="res://entities/art/bike.glb" id="2_nmqw5"]
+[ext_resource type="AudioStream" uid="uid://emddbi0kxhe7" path="res://entities/audio/bicycle-chain.ogg" id="3_lw8md"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0xm2m"]
+friction = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
+size = Vector3(0.6, 2.6000001, 1.3000001)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gg43x"]
+radius = 0.3
+height = 2.8
+
+[sub_resource type="Curve" id="Curve_nv2rg"]
+_limits = [0.0, 50.0, 0.0, 50.0]
+_data = [Vector2(0, 0), 0.0, 4.1657143, 0, 0, Vector2(20.897833, 29.6), 0.06646116, 0.06646116, 0, 0, Vector2(50, 0), -0.28173912, 0.0, 0, 0]
+point_count = 3
+
+[node name="Bike" type="RigidBody3D" unique_id=1053550622 node_paths=PackedStringArray("_controller_input", "_ground_check", "_pedals", "_steering_handle", "_camera_root", "_chain_sfx") groups=["player"]]
+physics_material_override = SubResource("PhysicsMaterial_0xm2m")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.55, 0)
+linear_damp = 2.0
+angular_damp = 1.0
+script = ExtResource("1_f5gm3")
+_steer_force = 6.0
+_controller_input = NodePath("ControllerInput")
+_ground_check = NodePath("GroundCheck")
+_pedals = NodePath("Bike/Pedals_001")
+_steering_handle = NodePath("Bike/SteeringHandle_001")
+_camera_root = NodePath("CameraRoot")
+_chain_sfx = NodePath("ChainSfx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=576469299]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.050000012, -2.18557e-09)
+shape = SubResource("BoxShape3D_h2yge")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=454088619]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.6, 0)
+shape = SubResource("CapsuleShape3D_gg43x")
+
+[node name="GroundCheck" type="RayCast3D" parent="." unique_id=1087657610]
+target_position = Vector3(0, -1.25, 0)
+
+[node name="CameraRoot" type="Node3D" parent="." unique_id=1140856077]
+top_level = true
+
+[node name="Camera3D" type="Camera3D" parent="CameraRoot" unique_id=1108688708 groups=["cam"]]
+transform = Transform3D(1, 0, 0, 0, 0.86602545, 0.5, 0, -0.5, 0.8660253, 0, 4.001222, 4.7220526)
+current = true
+
+[node name="Bike" parent="." unique_id=1369459198 instance=ExtResource("2_nmqw5")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, -0.90000004, 0)
+
+[node name="ChainSfx" type="AudioStreamPlayer3D" parent="." unique_id=1441628999]
+stream = ExtResource("3_lw8md")
+volume_db = -80.0
+autoplay = true
+
+[node name="ControllerInput" parent="." unique_id=472690698 instance=ExtResource("1_77p72")]
+_accel_curve = SubResource("Curve_nv2rg")
+
+[editable path="Bike"]

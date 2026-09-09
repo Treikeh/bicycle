@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://di5ljhxxhtic7"]
+
+[ext_resource type="Texture2D" uid="uid://cjdwcagry1rek" path="res://levels/art/road_bc.png" id="1_h0ory"]
+
+[resource]
+albedo_texture = ExtResource("1_h0ory")
+texture_filter = 0

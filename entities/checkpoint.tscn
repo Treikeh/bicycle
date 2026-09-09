@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://b0wkkwsvky4c2"]
+
+[ext_resource type="Script" uid="uid://cslol6bpdkbw1" path="res://entities/checkpoint.gd" id="1_wpuaw"]
+[ext_resource type="Material" uid="uid://de0hhst7i1a7c" path="res://entities/art/checkpoint_mat_blue.tres" id="2_hjeaj"]
+[ext_resource type="Material" uid="uid://dlkcgna3tfwgs" path="res://entities/art/checkpoint_mat_gold.tres" id="3_6wqo1"]
+[ext_resource type="Script" uid="uid://d3fdnsy72gnno" path="res://common/hide_on_ready.gd" id="3_l3rob"]
+[ext_resource type="AudioStream" uid="uid://c2f8nlrxr4kb2" path="res://entities/audio/checkpoint_reached.ogg" id="5_8w72o"]
+
+[sub_resource type="Curve" id="Curve_hjeaj"]
+_limits = [0.1, 5.0, 0.0, 1.0]
+_data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(0.504644, 3.0008004), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_h2yge"]
+radius = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_doj4i"]
+resource_local_to_scene = true
+material = ExtResource("2_hjeaj")
+flip_faces = true
+top_radius = 3.0
+bottom_radius = 3.0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rmh36"]
+top_radius = 0.1
+bottom_radius = 0.1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_doj4i"]
+random_pitch = 1.005793
+streams_count = 1
+stream_0/stream = ExtResource("5_8w72o")
+
+[node name="Checkpoint" type="Area3D" unique_id=382863796 node_paths=PackedStringArray("_checkpoint_transform_node", "_mesh", "_reached_sfx")]
+script = ExtResource("1_wpuaw")
+_checkpoint_transform_node = NodePath("CheckpointTransform")
+_mesh = NodePath("CollisionShape3D/MeshInstance3D")
+_rotation_curve = SubResource("Curve_hjeaj")
+_default_mat = ExtResource("2_hjeaj")
+_final_mat = ExtResource("3_6wqo1")
+_reached_sfx = NodePath("ReachedSfx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=739213358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_h2yge")
+debug_color = Color(0.75, 0.4625, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=843704987]
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_doj4i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D/MeshInstance3D" unique_id=527716935]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 4.371139e-08, -1)
+mesh = SubResource("CylinderMesh_rmh36")
+script = ExtResource("3_l3rob")
+
+[node name="CheckpointTransform" type="Marker3D" parent="." unique_id=1868732184]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="ReachedSfx" type="AudioStreamPlayer" parent="." unique_id=347012884]
+stream = SubResource("AudioStreamRandomizer_doj4i")

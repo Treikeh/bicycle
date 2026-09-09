@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dlkcgna3tfwgs"]
+
+[ext_resource type="Texture2D" uid="uid://xswuq7mechr8" path="res://entities/art/checkpoint.png" id="1_rbu4e"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 0.81333333, 0.3, 1)
+albedo_texture = ExtResource("1_rbu4e")
+uv1_scale = Vector3(2, 2, 2)
+texture_filter = 2
